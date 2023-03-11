@@ -19,7 +19,7 @@ app.get("/", async (req, res) => {
 });
 
 app.put("/", async (req, res) => {
-  await pool.query(`INSERT INTO todos (text) VALUES "${req.body.text}";`);
+  await pool.query(`INSERT INTO todos (text) VALUES ('${req.body.text}');`);
   const { rows } = await pool.query("SELECT * FROM todos");
   res.send(JSON.stringify(rows));
 });
