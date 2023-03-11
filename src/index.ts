@@ -24,6 +24,12 @@ app.put("/", async (req, res) => {
   res.send(JSON.stringify(rows));
 });
 
+app.delete("/", async (req, res) => {
+  await pool.query(`DELETE FROM todos ('${req.body.todoId}');`);
+  const { rows } = await pool.query("DELETE * FROM todos");
+  res.send(JSON.stringify(rows));
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
