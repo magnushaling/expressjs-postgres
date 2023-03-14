@@ -25,10 +25,17 @@ app.put("/", async (req, res) => {
 });
 
 app.delete("/", async (req, res) => {
-  await pool.query(`DELETE FROM todos ('${req.body.todoId}');`);
+  await pool.query(`DELETE FROM todos WHERE id=${req.body.todoId}`);
   const { rows } = await pool.query("DELETE * FROM todos");
   res.send(JSON.stringify(rows));
 });
+
+app.post('/', async function (req, res) {
+  await pool.query(` UPDATE todos SET ischecked = NOT ischecked WHERE id = ${req.body.id};`)
+  const { rows } = await pool.query("SELECT * FROM todos");
+  res.send(JSON.stringify(rows));
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
